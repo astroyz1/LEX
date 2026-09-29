@@ -1,0 +1,2 @@
+create policy "msg files read members" on storage.objects for select to authenticated using (bucket_id = 'message-files' and public.is_conversation_member(((storage.foldername(name))[1])::uuid, auth.uid()));
+create policy "msg files upload members" on storage.objects for insert to authenticated with check (bucket_id = 'message-files' and (storage.foldername(name))[2] = auth.uid()::text and public.is_conversation_member(((storage.foldername(name))[1])::uuid, auth.uid()));
